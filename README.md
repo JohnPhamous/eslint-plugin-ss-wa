@@ -15,8 +15,8 @@ In your `.eslintrc`
   "plugins": [
     "ss-wa"
   ],
-  "rules": [
+  "rules": {
     "ss-wa/onclick-requires-data-client-id": 1
-  ]
+  }
 }
 ```
