@@ -1,0 +1,18 @@
+{
+  "name": "eslint-plugin-ss-wa",
+  "version": "1.0.0",
+  "description": "eslint rules for data-client-id and data-client-type",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "John Pham",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^7.9.0"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2"
+  }
+}
