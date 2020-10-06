@@ -1,5 +1,5 @@
-const rules = require('./index');
-const RuleTester = require('eslint').RuleTester;
+const rules = require("./index");
+const RuleTester = require("eslint").RuleTester;
 
 RuleTester.setDefaultConfig({
   parserOptions: {
@@ -12,16 +12,17 @@ RuleTester.setDefaultConfig({
 
 const ruleTester = new RuleTester();
 
-const errors = [{ messageId: 'unexpected' }];
-const typeCheckRule = rules['rules']['onclick-requires-data-client-id'];
+const missingIdError = [{ messageId: "missingId" }];
+const redundantIdError = [{ messageId: "redundantId" }];
+const typeCheckRule = rules["rules"]["onclick-requires-data-client-id"];
 
-ruleTester.run('type-check', typeCheckRule, {
+ruleTester.run("type-check", typeCheckRule, {
   valid: [
     {
-      code: '<button>Click Me</button>',
+      code: "<button>Click Me</button>",
     },
     {
-      code: '<div>Click Me</div>',
+      code: "<div>Click Me</div>",
     },
     {
       code:
@@ -34,30 +35,51 @@ ruleTester.run('type-check', typeCheckRule, {
       code:
         '<button onClick={onClickHandler} data-client-id="abc">Click Me</button>',
     },
+    {
+      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} clientId={'id'} />`,
+    },
+    {
+      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-id={'id'} />`,
+    },
+    {
+      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-type={'type'} />`,
+    },
   ],
   invalid: [
     {
-      code: '<button onClick={clickHandler}>Click Me</button>',
-      errors,
+      code: "<button onClick={clickHandler}>Click Me</button>",
+      errors: missingIdError,
     },
     {
-      code: '<div onClick={clickHandler}>Click Me</div>',
-      errors,
+      code: "<div onClick={clickHandler}>Click Me</div>",
+      errors: missingIdError,
     },
     {
-      code: '<div onClick={() => {clickHandler()}}>Click Me</div>',
-      errors,
+      code: "<div onClick={() => {clickHandler()}}>Click Me</div>",
+      errors: missingIdError,
     },
     {
       code:
         '<div onClick={() => {clickHandler()}} data-client-id="">Click Me</div>',
-      errors,
+      errors: missingIdError,
     },
     {
       code:
         // eslint-disable-next-line no-template-curly-in-string
-        '<button className={`${classes.kebabButton} ${className}`} onClick={onClick} aria-label={ariaLabel}><MoreVertIcon classes={{ root: classes.kebabIcon }} /></button>',
-      errors,
+        "<button className={`${classes.kebabButton} ${className}`} onClick={onClick} aria-label={ariaLabel}><MoreVertIcon classes={{ root: classes.kebabIcon }} /></button>",
+      errors: missingIdError,
+    },
+    {
+      code: `<Checkbox checkedState={false} data-client-type={'type'} />`,
+      errors: redundantIdError,
+    },
+    {
+      code: `<Checkbox checkedState={false} data-client-id={'type'} />`,
+      errors: redundantIdError,
+    },
+    {
+      code: `<Checkbox checkedState={false} clientId={'type'} />`,
+      errors: redundantIdError,
     },
   ],
 });
