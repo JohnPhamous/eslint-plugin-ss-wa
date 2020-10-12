@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-ss-wa",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "eslint rules for data-client-id and data-client-type",
   "main": "index.js",
   "scripts": {

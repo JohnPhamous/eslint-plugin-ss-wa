@@ -9,8 +9,6 @@ module.exports = {
         messages: {
           missingId:
             "Elements that have an onClick must also have a data-client-id, data-client-type, or clientId.",
-          redundantId:
-            "This element doesn't have an onClick. Are you sure you need a data-client-id, data-client-type, or clientId?",
         },
       },
       create: function (context) {
@@ -35,8 +33,6 @@ module.exports = {
 
               if (hasOnClick && !hasDataClientId) {
                 context.report({ node, messageId: "missingId" });
-              } else if (!hasOnClick && hasDataClientId) {
-                context.report({ node, messageId: "redundantId" });
               }
             }
           },

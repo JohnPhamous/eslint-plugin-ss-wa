@@ -13,7 +13,6 @@ RuleTester.setDefaultConfig({
 const ruleTester = new RuleTester();
 
 const missingIdError = [{ messageId: "missingId" }];
-const redundantIdError = [{ messageId: "redundantId" }];
 const typeCheckRule = rules["rules"]["onclick-requires-data-client-id"];
 
 ruleTester.run("type-check", typeCheckRule, {
@@ -44,6 +43,15 @@ ruleTester.run("type-check", typeCheckRule, {
     {
       code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-type={'type'} />`,
     },
+    {
+      code: `<Checkbox checkedState={false} data-client-type={'type'} />`,
+    },
+    {
+      code: `<Checkbox checkedState={false} data-client-id={'type'} />`,
+    },
+    {
+      code: `<Checkbox checkedState={false} clientId={'type'} />`,
+    },
   ],
   invalid: [
     {
@@ -68,18 +76,6 @@ ruleTester.run("type-check", typeCheckRule, {
         // eslint-disable-next-line no-template-curly-in-string
         "<button className={`${classes.kebabButton} ${className}`} onClick={onClick} aria-label={ariaLabel}><MoreVertIcon classes={{ root: classes.kebabIcon }} /></button>",
       errors: missingIdError,
-    },
-    {
-      code: `<Checkbox checkedState={false} data-client-type={'type'} />`,
-      errors: redundantIdError,
-    },
-    {
-      code: `<Checkbox checkedState={false} data-client-id={'type'} />`,
-      errors: redundantIdError,
-    },
-    {
-      code: `<Checkbox checkedState={false} clientId={'type'} />`,
-      errors: redundantIdError,
     },
   ],
 });
