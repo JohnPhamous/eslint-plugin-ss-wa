@@ -25,32 +25,33 @@ ruleTester.run("type-check", typeCheckRule, {
     },
     {
       code:
-        '<div onClick={() => {onClickHandler()}} data-client-id="123">Click Me</div>',
-    },
-    {
-      code: '<div onClick={onClickHandler} data-client-id="abc">Click Me</div>',
+        '<div onClick={() => {onClickHandler()}} data-client-id="123" data-dd-action-name="123">Click Me</div>',
     },
     {
       code:
-        '<button onClick={onClickHandler} data-client-id="abc">Click Me</button>',
+        '<div onClick={onClickHandler} data-client-id="abc" data-dd-action-name="abc">Click Me</div>',
     },
     {
-      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} clientId={'id'} />`,
+      code:
+        '<button onClick={onClickHandler} data-client-id="abc"  data-dd-action-name="abc">Click Me</button>',
     },
     {
-      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-id={'id'} />`,
+      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} clientId={'id'}  data-dd-action-name="id"/>`,
     },
     {
-      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-type={'type'} />`,
+      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-id={'id'}  data-dd-action-name="id"/>`,
     },
     {
-      code: `<Checkbox checkedState={false} data-client-type={'type'} />`,
+      code: `<Checkbox checkedState={false} onClick={onCheckboxClickHandler} data-client-type={'type'}  data-dd-action-name="type"/>`,
     },
     {
-      code: `<Checkbox checkedState={false} data-client-id={'type'} />`,
+      code: `<Checkbox checkedState={false} data-client-type={'type'}  data-dd-action-name="type"/>`,
     },
     {
-      code: `<Checkbox checkedState={false} clientId={'type'} />`,
+      code: `<Checkbox checkedState={false} data-client-id={'type'}  data-dd-action-name="type"/>`,
+    },
+    {
+      code: `<Checkbox checkedState={false} clientId={'type'} data-dd-action-name="type"/>`,
     },
   ],
   invalid: [
